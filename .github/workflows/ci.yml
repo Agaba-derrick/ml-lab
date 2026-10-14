@@ -65,4 +65,9 @@ jobs:
             echo "::error::Neither HF_TOKEN nor ML_AI secret was found. Please ensure a secret is added under Settings -> Secrets and variables -> Actions -> Repository secrets."
             exit 1
           fi
-          git push --force https://agaba-derrick:$HF_TOKEN@huggingface.co/spaces/agaba-derrick/ML-AI main:main
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan hf-deploy
+          git add -A
+          git commit -m "Deploy: clean application snapshot to Hugging Face Spaces"
+          git push --force https://agaba-derrick:$HF_TOKEN@huggingface.co/spaces/agaba-derrick/ML-AI hf-deploy:main
