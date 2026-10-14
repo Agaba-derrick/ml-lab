@@ -4,14 +4,13 @@ Run with: ../.venv/bin/python app.py
 Then open: http://localhost:5050
 """
 
-from flask import Flask, render_template, request, jsonify
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
 import pandas as pd
-import numpy as np
+from flask import Flask, jsonify, render_template, request
+from sklearn.datasets import load_iris
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 app = Flask(__name__)
 
@@ -75,12 +74,12 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
-    features = [[
+    features = pd.DataFrame([[
         float(data['sepal_length']),
         float(data['sepal_width']),
         float(data['petal_length']),
         float(data['petal_width'])
-    ]]
+    ]], columns=iris.feature_names)
 
     # Decision Tree prediction
     dt_pred = int(dt_model.predict(features)[0])

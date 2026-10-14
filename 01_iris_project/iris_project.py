@@ -24,24 +24,24 @@
 # ─────────────────────────────────────────────────────────────
 # Think of imports like gathering your tools before starting work
 
-import pandas as pd                          # For working with data tables
-import matplotlib.pyplot as plt              # For drawing charts
-import seaborn as sns                        # For prettier charts
-from sklearn.datasets import load_iris       # The Iris dataset (built into scikit-learn)
-from sklearn.model_selection import train_test_split  # To split data into train/test
-from sklearn.tree import DecisionTreeClassifier       # Our first ML model
-from sklearn.neighbors import KNeighborsClassifier   # Our second ML model
-from sklearn.metrics import (
-    accuracy_score,
-    classification_report,
-    confusion_matrix
-)
 import os
 import warnings
+
+import matplotlib.pyplot as plt  # For drawing charts
+import pandas as pd  # For working with data tables
+import seaborn as sns  # For prettier charts
+from sklearn.datasets import load_iris  # The Iris dataset (built into scikit-learn)
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split  # To split data into train/test
+from sklearn.neighbors import KNeighborsClassifier  # Our second ML model
+from sklearn.tree import DecisionTreeClassifier  # Our first ML model
+
 warnings.filterwarnings('ignore')
 
 # Make sure output folder exists
-os.makedirs("outputs", exist_ok=True)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "outputs")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 print("=" * 60)
 print("  🌸  IRIS FLOWER CLASSIFIER — ML Learning Journey")
@@ -124,7 +124,7 @@ for ax, feature in zip(axes.flatten(), features):
     ax.legend()
 
 plt.tight_layout()
-plt.savefig('outputs/01_feature_distributions.png', dpi=150, bbox_inches='tight')
+plt.savefig(os.path.join(OUTPUT_DIR, '01_feature_distributions.png'), dpi=150, bbox_inches='tight')
 plt.close()
 print("  ✅ Saved: outputs/01_feature_distributions.png")
 
@@ -149,7 +149,7 @@ ax2.set_xlabel('Petal Length (cm)'); ax2.set_ylabel('Petal Width (cm)')
 ax2.set_title('Petal Features (easier to separate!)'); ax2.legend()
 
 plt.tight_layout()
-plt.savefig('outputs/02_scatter_plots.png', dpi=150, bbox_inches='tight')
+plt.savefig(os.path.join(OUTPUT_DIR, '02_scatter_plots.png'), dpi=150, bbox_inches='tight')
 plt.close()
 print("  ✅ Saved: outputs/02_scatter_plots.png")
 
@@ -162,7 +162,7 @@ sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm',
 ax.set_title('Feature Correlation Heatmap\n(1.0 = perfect positive, -1.0 = perfect negative)',
              fontweight='bold', pad=15)
 plt.tight_layout()
-plt.savefig('outputs/03_correlation_heatmap.png', dpi=150, bbox_inches='tight')
+plt.savefig(os.path.join(OUTPUT_DIR, '03_correlation_heatmap.png'), dpi=150, bbox_inches='tight')
 plt.close()
 print("  ✅ Saved: outputs/03_correlation_heatmap.png")
 
@@ -185,7 +185,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print(f"  Training set: {len(X_train)} samples")
 print(f"  Testing set:  {len(X_test)} samples")
-print(f"  (80% train / 20% test split)")
+print("  (80% train / 20% test split)")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -239,7 +239,7 @@ for ax, predictions, model_name in zip(
     ax.set_title(f'{model_name}\nAccuracy: {accuracy * 100:.1f}%', fontweight='bold')
 
 plt.tight_layout()
-plt.savefig('outputs/04_confusion_matrices.png', dpi=150, bbox_inches='tight')
+plt.savefig(os.path.join(OUTPUT_DIR, '04_confusion_matrices.png'), dpi=150, bbox_inches='tight')
 plt.close()
 print("  ✅ Saved: outputs/04_confusion_matrices.png")
 
@@ -269,7 +269,7 @@ for bar, acc in zip(bars, accuracies):
 
 ax.axhline(y=100, color='gray', linestyle='--', alpha=0.3, label='Perfect (100%)')
 plt.tight_layout()
-plt.savefig('outputs/05_model_comparison.png', dpi=150, bbox_inches='tight')
+plt.savefig(os.path.join(OUTPUT_DIR, '05_model_comparison.png'), dpi=150, bbox_inches='tight')
 plt.close()
 print("  ✅ Saved: outputs/05_model_comparison.png")
 
@@ -293,7 +293,7 @@ predicted_species = species_names[prediction[0]]
 print(f"\n  Flower measurements: sepal={new_flower[0][0]}cm x {new_flower[0][1]}cm, "
       f"petal={new_flower[0][2]}cm x {new_flower[0][3]}cm")
 print(f"  Predicted species: {predicted_species.upper()} (using {best_name})")
-print(f"  Confidence scores:")
+print("  Confidence scores:")
 for name, prob in zip(species_names, prediction_proba):
     bar = 'X' * int(prob * 20)
     print(f"    {name:12s}: {bar:<20s} {prob*100:.1f}%")

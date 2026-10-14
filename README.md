@@ -1,5 +1,7 @@
 # 🌸 Project 1: Iris Flower Classifier
 
+[![ML Lab CI Pipeline](https://github.com/Agaba-derrick/ml-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/Agaba-derrick/ml-lab/actions/workflows/ci.yml)
+
 > **Your first Machine Learning project!** Classify Iris flowers into 3 species using just 4 measurements — with a beautiful interactive web UI.
 
 ---
@@ -18,6 +20,15 @@ Then open your browser at: **http://localhost:5050**
 .venv/bin/python 01_iris_project/iris_project.py
 ```
 Charts will be saved to `01_iris_project/outputs/`
+
+### 3. Run Automated Tests & Quality Checks (CI)
+```bash
+# Run all unit and integration tests
+.venv/bin/pytest -v
+
+# Run code style and linter checks
+.venv/bin/ruff check .
+```
 
 ---
 
