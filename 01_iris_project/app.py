@@ -4,6 +4,8 @@ Run with: ../.venv/bin/python app.py
 Then open: http://localhost:5050
 """
 
+import os
+
 import pandas as pd
 from flask import Flask, jsonify, render_template, request
 from sklearn.datasets import load_iris
@@ -12,7 +14,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static"),
+)
 
 # ── Train models once at startup ──────────────────────────────
 iris = load_iris()
@@ -120,8 +127,9 @@ def dataset():
 
 
 if __name__ == '__main__':
-    print("\n" + "="*50)
+    port = int(os.environ.get('PORT', '7860'))
+    print("\n" + "=" * 50)
     print("  🌸  Iris Classifier UI is starting...")
-    print("  Open your browser at: http://localhost:5050")
-    print("="*50 + "\n")
-    app.run(debug=True, port=5050)
+    print(f"  Open your browser at: http://localhost:{port}")
+    print("=" * 50 + "\n")
+    app.run(host='0.0.0.0', port=port, debug=False)

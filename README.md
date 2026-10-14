@@ -1,3 +1,14 @@
+---
+title: Iris Flower Classifier
+emoji: 🌸
+colorFrom: pink
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+short_description: Interactive Iris Classification with Decision Tree and KNN
+---
+
 # 🌸 Project 1: Iris Flower Classifier
 
 [![ML Lab CI Pipeline](https://github.com/Agaba-derrick/ml-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/Agaba-derrick/ml-lab/actions/workflows/ci.yml)

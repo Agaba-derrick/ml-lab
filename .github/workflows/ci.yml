@@ -45,3 +45,24 @@ jobs:
       - name: Verify Training Pipeline Script
         run: |
           python 01_iris_project/iris_project.py
+
+  deploy-to-huggingface:
+    name: Deploy to Hugging Face Spaces
+    needs: lint-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Hugging Face Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "HF_TOKEN secret is not set in GitHub. Skipping Hugging Face deployment."
+            exit 0
+          fi
+          git push --force https://agaba-derrick:$HF_TOKEN@huggingface.co/spaces/agaba-derrick/ML-AI main:main
