@@ -11,14 +11,22 @@ short_description: Interactive Iris Classification with Decision Tree and KNN
 # 🌸 Project 1: Iris Flower Classifier
 
 [![ML Lab CI Pipeline](https://github.com/Agaba-derrick/ml-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/Agaba-derrick/ml-lab/actions/workflows/ci.yml)
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/agaba-derrick/ML-AI)
 
 > **Your first Machine Learning project!** Classify Iris flowers into 3 species using just 4 measurements — with a beautiful interactive web UI.
+> 
+> 🌐 **Live Demo:** Try the classifier live in your browser at [**agaba-derrick-ml-ai.static.hf.space**](https://agaba-derrick-ml-ai.static.hf.space) or on [**Hugging Face Spaces**](https://huggingface.co/spaces/agaba-derrick/ML-AI).
 
 ---
 
 ## 🚀 How to Run
 
-### 1. Start the Web UI (Recommended)
+### 🌐 Option 1: Online Web UI (Zero Setup)
+Test the trained models instantly without installing anything:
+- **Direct Web App:** [https://agaba-derrick-ml-ai.static.hf.space](https://agaba-derrick-ml-ai.static.hf.space)
+- **Hugging Face Space:** [https://huggingface.co/spaces/agaba-derrick/ML-AI](https://huggingface.co/spaces/agaba-derrick/ML-AI)
+
+### 💻 Option 2: Local Web UI
 ```bash
 # From the ml-lab/ directory:
 .venv/bin/python 01_iris_project/app.py
