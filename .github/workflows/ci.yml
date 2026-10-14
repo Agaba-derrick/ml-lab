@@ -59,10 +59,10 @@ jobs:
 
       - name: Push to Hugging Face Spaces
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN || vars.HF_TOKEN }}
         run: |
           if [ -z "$HF_TOKEN" ]; then
-            echo "HF_TOKEN secret is not set in GitHub. Skipping Hugging Face deployment."
-            exit 0
+            echo "::error::HF_TOKEN was not found. Please ensure HF_TOKEN is added under Settings -> Secrets and variables -> Actions -> Repository secrets (not Environment or Variables)."
+            exit 1
           fi
           git push --force https://agaba-derrick:$HF_TOKEN@huggingface.co/spaces/agaba-derrick/ML-AI main:main
