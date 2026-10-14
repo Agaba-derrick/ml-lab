@@ -3,8 +3,7 @@ title: Iris Flower Classifier
 emoji: 🌸
 colorFrom: pink
 colorTo: indigo
-sdk: docker
-app_port: 7860
+sdk: static
 pinned: false
 short_description: Interactive Iris Classification with Decision Tree and KNN
 ---
