@@ -19,8 +19,12 @@ env/
 .ipynb_checkpoints/
 *.ipynb
 
-# Generated outputs (charts) — optional to track
-# outputs/
+# Generated outputs (charts)
+outputs/
+**/outputs/
+*.png
+*.jpg
+*.jpeg
 
 # OS
 .DS_Store
