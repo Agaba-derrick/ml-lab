@@ -96,8 +96,8 @@ def build():
         flags=re.DOTALL
     )
 
-    # Client-side ML logic injection
-    client_ml_js = f"""
+    # Client-side ML data + predictClientSide to inject
+    client_ml_data_js = f"""
   // ── Client-side In-Browser ML Engine (0 server / 0 CPU quota required) ──
   const KNN_TRAIN_DATA = {json.dumps(knn_samples)};
   const ALL_DATASET_RECORDS = {json.dumps(dataset_records)};
@@ -155,18 +155,21 @@ def build():
       }}
     }};
   }}
+"""
 
-  async function predict() {{
+    # Replacement for predict() — server fetch → client-side call
+    predict_replacement = """
+  async function predict() {
     const btn = document.getElementById('predict-btn');
-    btn.textContent = '🔮 Computing Prediction...';
+    btn.textContent = '\U0001f52e Computing Prediction...';
     btn.disabled = true;
 
-    const payload = {{
+    const payload = {
       sepal_length: parseFloat(document.getElementById('sl').value),
       sepal_width:  parseFloat(document.getElementById('sw').value),
       petal_length: parseFloat(document.getElementById('pl').value),
       petal_width:  parseFloat(document.getElementById('pw').value),
-    }};
+    };
 
     // Instant in-browser prediction
     const data = predictClientSide(
@@ -177,19 +180,44 @@ def build():
     );
     renderResult(data, payload);
 
-    btn.textContent = '🔮 Predict Species';
+    btn.textContent = '\U0001f52e Predict Species';
     btn.disabled = false;
-  }}
-
-  async function loadDataset() {{
-    allData = ALL_DATASET_RECORDS;
-    renderTable(allData);
-  }}
+  }
 """
 
-    # Replace predict and loadDataset functions in template
-    target_predict_pattern = r'async function predict\(\)\s*\{.*?async function loadDataset\(\)\s*\{.*?renderTable\(allData\);\s*\}'
-    html = re.sub(target_predict_pattern, client_ml_js.strip(), html, flags=re.DOTALL)
+    # Replacement for loadDataset() — server fetch → embedded data
+    load_dataset_replacement = """
+  async function loadDataset() {
+    allData = ALL_DATASET_RECORDS;
+    renderTable(allData);
+  }
+"""
+
+    # 1. Inject ML data + predictClientSide just before the predict() function
+    html = re.sub(
+        r'(\s*// ── Predict)',
+        '\n' + client_ml_data_js.strip() + '\n\n  // ── Predict',
+        html,
+        count=1
+    )
+
+    # 2. Replace only predict() body (server fetch → client-side)
+    html = re.sub(
+        r'async function predict\(\)\s*\{.*?\}',
+        predict_replacement.strip(),
+        html,
+        count=1,
+        flags=re.DOTALL
+    )
+
+    # 3. Replace only loadDataset() body (server fetch → embedded data)
+    html = re.sub(
+        r'async function loadDataset\(\)\s*\{.*?\}',
+        load_dataset_replacement.strip(),
+        html,
+        count=1,
+        flags=re.DOTALL
+    )
 
     output_path = os.path.join(os.path.dirname(__file__), 'index.html')
     with open(output_path, 'w', encoding='utf-8') as f:
