@@ -1,7 +1,7 @@
 """
 app.py — Flask web server for the Iris Flower Classifier UI
 Run with: ../.venv/bin/python app.py
-Then open: http://localhost:5050
+Then open: http://localhost:7860
 """
 
 import os

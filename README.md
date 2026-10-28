@@ -31,7 +31,7 @@ Test the trained models instantly without installing anything:
 # From the ml-lab/ directory:
 .venv/bin/python 01_iris_project/app.py
 ```
-Then open your browser at: **http://localhost:5050**
+Then open your browser at: **http://localhost:7860**
 
 ### 2. Run the Script (Terminal only)
 ```bash
