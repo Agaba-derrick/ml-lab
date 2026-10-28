@@ -135,7 +135,7 @@ def build():
     for (let i = 1; i < 3; i++) {{
       if (counts[i] > counts[maxIdx]) maxIdx = i;
     }}
-    const knnPred = SPECIES[maxIdx];
+    const knnPred = ['setosa', 'versicolor', 'virginica'][maxIdx];
     const knnProba = {{
       setosa: Math.round((counts[0] / 5) * 1000) / 10,
       versicolor: Math.round((counts[1] / 5) * 1000) / 10,
@@ -152,13 +152,12 @@ def build():
         prediction: knnPred,
         probabilities: knnProba,
         accuracy: {knn_acc}
-      }},
-      species_info: SPECIES_INFO
+      }}
     }};
   }}
 
   async function predict() {{
-    const btn = document.querySelector('.btn-primary');
+    const btn = document.getElementById('predict-btn');
     btn.textContent = '🔮 Computing Prediction...';
     btn.disabled = true;
 
